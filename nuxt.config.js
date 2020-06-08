@@ -23,6 +23,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'normalize.css',
     'ant-design-vue/dist/antd.css'
   ],
   /*
@@ -50,6 +51,18 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue|ts)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+          options: {
+            fix: true
+          }
+        })
+      }
     }
   }
-}
+};

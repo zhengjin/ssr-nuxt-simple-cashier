@@ -1,0 +1,28 @@
+{
+  "apps": [{
+    "name": "nuxt-test",
+    "script": "./server/index.js",
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "out_file" : "/export/log/nuxt/cashier.log",
+    "error_file" : "/export/log/nuxt/cashier_error.log",
+    "merge_logs": true,
+    "exec_mode": "cluster",
+    "instance_var": "INSTANCE_ID",
+    "instances": "max",
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    },
+    "env_pre_production": {
+      "NODE_ENV": "pre_production"
+    },
+    "env_test": {
+      "NODE_ENV": "test"
+    }
+  }],
+  "deploy": {
+
+  }
+}
