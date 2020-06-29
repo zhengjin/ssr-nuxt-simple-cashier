@@ -1,8 +1,44 @@
 <template>
   <div>
-    <nuxt />
+    <main
+      v-show="page_loading"
+      class="main"
+    >
+      <facebook-loader
+        v-if="skeleton === 'skeleton-page-one'"
+        :unique-key="uniqueKey"
+      />
+    </main>
+    <nuxt
+      v-show="!page_loading"
+      :nuxt-child-key="nuxtUniqueKey"
+    />
   </div>
 </template>
+
+<script>
+  import {FacebookLoader} from 'vue-content-loader';
+
+  export default {
+    components: {
+      FacebookLoader
+    },
+    data () {
+      return {
+        uniqueKey: Math.random().toString(36).substring(2),
+        nuxtUniqueKey: Math.random().toString(36).substring(2),
+      }
+    },
+    computed: {
+      skeleton() {
+        return this.$store.state.skeleton;
+      },
+      page_loading() {
+        return this.$store.state.page_loading;
+      }
+    }
+  }
+</script>
 
 <style>
 html {
