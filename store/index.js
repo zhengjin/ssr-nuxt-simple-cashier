@@ -1,5 +1,5 @@
 export const state = () => ({
-  locales: ['en', 'fr'],
+  locales: ['en', 'th'],
   locale: 'en',
   skeleton: null,
   page_loading: false,
