@@ -1,11 +1,7 @@
-// import * as Router from 'koa-router';
-//
-//
-// import UserRouter from './userRouter';
-// import HomeRouter from './homeRouter';
-//
-// const apiRouter = new Router({ prefix: '/api'});
-// apiRouter.use('/users', UserRouter);
-// apiRouter.use('/home', HomeRouter);
-//
-// export default apiRouter.routes();
+import * as Router from 'koa-router';       // learn: https://www.npmjs.com/package/koa-router
+
+/** api路由模块 */
+// @ts-ignore
+const router = new Router();
+
+export default router;

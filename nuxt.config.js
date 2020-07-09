@@ -1,5 +1,9 @@
 module.exports = {
   mode: 'universal',
+
+  telemetry: false,
+  srcDir: "client",
+  buildDir: 'dist',
   /*
   ** Headers of the page
   */
@@ -68,7 +72,7 @@ module.exports = {
       }
     },
     babel: {
-      presets({isServer}) {
+      presets({}) {
         return [
           [
             "@nuxt/babel-preset-app", {loose: true}

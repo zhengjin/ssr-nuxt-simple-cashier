@@ -20,7 +20,7 @@
 
 <script lang="ts">
   import axios from 'axios';
-  import Logo from '~/components/Logo.vue';
+  import Logo from '../../client/components/Logo.vue';
   import {Component, Vue} from 'nuxt-property-decorator';
 
   @Component({
