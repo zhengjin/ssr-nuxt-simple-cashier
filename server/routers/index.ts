@@ -1,7 +1,13 @@
-import * as Router from 'koa-router';       // learn: https://www.npmjs.com/package/koa-router
+const KoaRouter = require('koa-router');
 
-/** api路由模块 */
-// @ts-ignore
-const router = new Router();
+const router = new KoaRouter()
 
-export default router;
+//注册路由
+router.get('/api', async (ctx: any) => {
+  debugger;
+  console.log('index');
+  ctx.body = 'index';
+});
+
+export {router}
+// module.exports = router;
