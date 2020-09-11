@@ -1,23 +1,20 @@
-const Koa = require('koa');
-const consola = require('consola');
-const {Nuxt, Builder} = require('nuxt');
-// const {router} = require('./routers/index');
-// import * as Koa from 'koa';
-// import * as consola from 'consola';
-// import router from './routers/index';
-// import {Nuxt, Builder} from '@nuxt/types';
-const KoaRouter = require('koa-router');
+// @ts-nocheck
+import express from 'express';
+import consola from 'consola';
+import {Nuxt, Builder} from 'nuxt';
+import bodyParser from 'body-parser';
 
-const router = new KoaRouter();
+import router from './routers';
 
-const app = new Koa();
+const app = express();
 
 // Import and Set Nuxt.js options
-const config = require('../nuxt.config.js');
-config.dev = app.env !== 'production';
+import config from '../nuxt.config';
+
+config.dev = !(process.env.NODE_ENV === 'production');
 
 async function start() {
-  // Instantiate nuxt.js
+  // Init Nuxt.js
   const nuxt = new Nuxt(config);
 
   const {
@@ -25,49 +22,24 @@ async function start() {
     port = process.env.PORT || 3000
   } = nuxt.options.server;
 
-  await nuxt.ready();
-  // Build in development
+  // Build only in dev mode
   if (config.dev) {
     const builder = new Builder(nuxt);
-    await builder.build();
+    builder.build()
+  } else {
+    await nuxt.ready()
   }
 
-  // app.use(router.route());
-  app.use(async(ctx: any, next: any) => {
-    const reg = /node_api/i;
-    debugger;
-    if(!reg.test(ctx.url)){
-      ctx.status = 200;
-      ctx.respond = false; // Bypass Koa's built-in response handling
-      ctx.req.ctx = ctx; // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash
-      nuxt.render(ctx.req, ctx.res);
-    } else {
-      try {
-        await next();
-      } catch (err) {
-        ctx.response.status = err.statusCode || err.status || 500;
-        ctx.response.body = {
-          message: err.message
-        }
-      }
-    }
-  });
+  app.use('/node_api', router);
 
-  //注册路由
-  router.get('/node_api/api', async (ctx: any) => {
-    debugger;
-    console.log('index');
-    ctx.body = 'index1111';
-  });
-  router.post('/node_api/api', async (ctx: any) => {
-    debugger;
-    console.log('index');
-    ctx.body = 'index';
-  });
+  // Init body-parser options (inbuilt with express)
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
 
-  app.use(router.routes());  // 添加路由中间件
-  app.use(router.allowedMethods()); // 对请求进行一些限制处理
+  // Give nuxt middleware to express
+  app.use(nuxt.render);
 
+  // Listen the server
   app.listen(port, host);
   consola.ready({
     message: `Server listening on http://${host}:${port}`,

@@ -5,10 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Current TS File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/ts-node/dist/bin.js",
+      "args": [
+        "${relativeFile}"
+      ],
+
+      "runtimeArgs": ["--presets", "env"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector"
+    },
+    {
       "type": "node",
       "request": "attach",
-      "name": "调试nuxt",
-      "processId": "${command:PickProcess}",
+      "name": "Attach",
       "port": 9229
     }
   ]

@@ -11,11 +11,11 @@ export const mutations = {
       state.locale = locale
     }
   },
-  
+
   UPDATE_SKELETON(state, data) {
     state.skeleton = data;
   },
-  
+
   UPDATE_LOADING(state, data) {
     state.page_loading = data;
   }

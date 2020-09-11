@@ -1,13 +1,8 @@
-const KoaRouter = require('koa-router');
+import {Router} from 'express';
+import Demo from './demo';
 
-const router = new KoaRouter()
+const router = Router();
 
-//注册路由
-router.get('/api', async (ctx: any) => {
-  debugger;
-  console.log('index');
-  ctx.body = 'index';
-});
+router.use(Demo);
 
-export {router}
-// module.exports = router;
+export default router;
